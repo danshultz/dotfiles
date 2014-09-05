@@ -1,0 +1,2 @@
+--type-set=puppet=.pp,.rb
+--ignore-dir=.bundle

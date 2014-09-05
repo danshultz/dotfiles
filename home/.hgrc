@@ -1,0 +1,8 @@
+[ui]
+username = Dan Shultz <das0118@gmail.com>
+
+[extensions]
+shelve =
+purge =
+rebase =
+mq =
