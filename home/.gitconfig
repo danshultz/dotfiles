@@ -14,28 +14,16 @@
   st = status
   br = branch
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-[diff]
-  #tool = opendiff
-  tool = p4
-[difftool "p4"]
-  #cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "$PWD/$BASE" "$PWD/$REMOTE" "$LOCAL" "$PWD/$MERGED"
-  #cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "$LOCAL" "$PWD/$REMOTE" "$PWD/$BASE" "$PWD/$MERGED"
-  cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge \
-    "$PWD/$BASE" \
-    "$PWD/$LOCAL" \
-    "$PWD/$REMOTE" \
-    "$PWD/$MERGED"
-  trustExitCode = false
-[merge]
-  #tool = opendiff
-  #tool = meld 
-  summary = true
-  tool = p4
-[mergetool "p4"]
-  cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "$PWD/$BASE" "$PWD/$REMOTE" "$PWD/$LOCAL" "$PWD/$MERGED"
-  #cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "$PWD/$LOCAL" "$PWD/$REMOTE" "$PWD/$BASE" "$PWD/$MERGED"
-  trustExitCode = false
 [mergetool]
-    keepBackup = true
+	keepBackup = false
 [push]
 	default = simple
+[merge]
+	tool = p4mergetool
+[mergetool "p4mergetool"]
+	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
+	trustExitCode = false
+[diff]
+	tool = p4mergetool
+[difftool "p4mergetool"]
+	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
