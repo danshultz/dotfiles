@@ -3,6 +3,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
  . $(brew --prefix)/etc/bash_completion
 fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which direnv > /dev/null; then eval "$(direnv hook $0)"; fi
 
 source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
 
@@ -79,3 +80,8 @@ function redis.stop {
 
 alias postgres.stop="sudo launchctl stop homebrew.mxcl.postgresql.plist"
 alias postgres.start="sudo launchctl start homebrew.mxcl.postgresql.plist"
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+  . /usr/local/bin/virtualenvwrapper.sh
+  export WORKON_HOME=~/.envs
+fi
