@@ -2,6 +2,11 @@
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
  . $(brew --prefix)/etc/bash_completion
 fi
+if [ -f $(brew --prefix nvm)/nvm.sh ]; then
+  export NVM_DIR=~/.nvm
+  . $(brew --prefix nvm)/nvm.sh
+fi
+
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which direnv > /dev/null; then eval "$(direnv hook $0)"; fi
 
