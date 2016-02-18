@@ -86,7 +86,8 @@ function redis.stop {
 alias postgres.stop="sudo launchctl stop homebrew.mxcl.postgresql.plist"
 alias postgres.start="sudo launchctl start homebrew.mxcl.postgresql.plist"
 alias clean_git_branches='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
-alias stage_cop="git status --porcelain --untracked-files=no | awk '{print \$2}' | xargs bundle exec rubocop -a"
+alias stage_cop="git status --porcelain --untracked-files=no | awk '{print \$2}' | xargs bundle exec rubocop -aD"
+alias prettyjson="python -m json.tool"
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
   . /usr/local/bin/virtualenvwrapper.sh
