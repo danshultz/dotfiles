@@ -89,6 +89,8 @@ alias clean_git_branches='git branch --merged | grep -v "\*" | xargs -n 1 git br
 alias stage_cop="git status --porcelain --untracked-files=no | awk '{print \$2}' | xargs bundle exec rubocop -aD"
 alias prettyjson="python -m json.tool"
 
+alias create_ruby_ctags='ctags -R --languages=ruby --exclude=.git --exclude=log --exclude=.bundle . $(bundle list --paths)'
+
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
   . /usr/local/bin/virtualenvwrapper.sh
   export WORKON_HOME=~/.envs
