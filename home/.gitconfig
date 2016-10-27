@@ -7,7 +7,7 @@
   safecrlf = false
 	editor = vim
 	quotepath = false
-	excludesfile = /Users/dshultz/.gitignore
+	excludesfile = ~/.gitignore
 [alias]
   co = checkout
   ci = commit

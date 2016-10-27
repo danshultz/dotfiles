@@ -4,3 +4,4 @@ tags
 .vagrant
 .vendor
 .nvmrc
+/.bundle
