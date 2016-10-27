@@ -84,6 +84,8 @@
 	<false/>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/dev/dotfiles/iterm2</string>
+	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{712, 459}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -108,11 +110,11 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>269 110 924 485 0 0 1440 878 </string>
+	<string>519 161 605 485 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 322 1436 856 0 0 1920 1178 </string>
+	<string>1 6 1446 864 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
+	<string>6 0 1432 876 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1454,6 +1456,10 @@
 			<string>/Users/dshultz</string>
 		</dict>
 	</array>
+	<key>NoSyncTimeOfLastPromo</key>
+	<real>481524425.55661899</real>
+	<key>NoSyncTimeOfLastPromoDownload</key>
+	<real>487620727.27544498</real>
 	<key>NotFirstRun</key>
 	<true/>
 	<key>OnlyWhenMoreTabs</key>
@@ -1504,7 +1510,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/dshultz/dev/dotfiles/iterm2</string>
+	<string>/Users/danshultz/dev/dotfiles/iterm2</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -1518,11 +1524,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.com/appcasts/testing.xml</string>
+	<string>https://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-12-01T14:09:45Z</date>
+	<date>2016-06-16T10:31:27Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1562,7 +1568,7 @@
 	<key>WebKitDefaultFontSize</key>
 	<integer>11</integer>
 	<key>WebKitStandardFont</key>
-	<string>.Lucida Grande UI</string>
+	<string>.AppleSystemUIFont</string>
 	<key>WindowNumber</key>
 	<true/>
 	<key>WindowStyle</key>
@@ -1574,6 +1580,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.0.0.20141103</string>
+	<string>2.1.4</string>
 </dict>
 </plist>
