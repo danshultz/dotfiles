@@ -1,3 +1,5 @@
+export PATH="/usr/local/sbin:/usr/local/bin:$PATH:/usr/local/android-sdk-macosx/platform-tools:~/bin:/usr/local/share/npm/bin"
+
 # source ~/bin/git-completion.bash
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
  . $(brew --prefix)/etc/bash_completion
@@ -7,12 +9,13 @@ if [ -f $(brew --prefix nvm)/nvm.sh ]; then
   . $(brew --prefix nvm)/nvm.sh
 fi
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which direnv > /dev/null; then eval "$(direnv hook $0)"; fi
-
-source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+
+# because command-t, VI will segfault
+EDITOR=vim
 
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
@@ -68,8 +71,6 @@ function __parse_hg_branch() {
 
 #PS1="\h:\W\u\$ "
 PS1="[\u|\W]\[$txtylw\]\$(__my_rvm_ruby_version)\[$txtcyn\]\$(__parse_hg_branch)\$(__parse_git_branch)\[$txtrst\]\$ "
-
-export PATH="/usr/local/sbin:/usr/local/bin:$PATH:/usr/local/android-sdk-macosx/platform-tools:~/bin:/usr/local/share/npm/bin"
 
 #aliases
 alias be="bundle exec"
