@@ -4,4 +4,6 @@ tags
 .vagrant
 .vendor
 .nvmrc
+.byebug_history
 /.bundle
+.DS_Store
