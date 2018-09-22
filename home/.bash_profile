@@ -9,6 +9,10 @@ if [ -f $(brew --prefix nvm)/nvm.sh ]; then
   . $(brew --prefix nvm)/nvm.sh
 fi
 
+if [ -d $(brew --prefix postgresql@9.6)/bin ]; then
+  export PATH="$(brew --prefix postgresql@9.6)/bin:$PATH"
+fi
+
 if which direnv > /dev/null; then eval "$(direnv hook $0)"; fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
