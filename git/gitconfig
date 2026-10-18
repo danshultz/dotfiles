@@ -18,15 +18,6 @@
 	keepBackup = false
 [push]
 	default = simple
-[merge]
-	tool = p4mergetool
-[mergetool "p4mergetool"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
-	trustExitCode = false
-[diff]
-	tool = p4mergetool
-[difftool "p4mergetool"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
 
 [merge "railsschema"]
   name = newer Rails schema version
@@ -43,3 +34,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+# Machine-specific overrides (signing key, work email, a mergetool on one box).
+# Untracked; create it by hand when needed.
+[include]
+	path = ~/.gitconfig.local
