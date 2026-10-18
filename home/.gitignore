@@ -7,3 +7,7 @@ tags
 .byebug_history
 /.bundle
 .DS_Store
+
+**/.claude/settings.local.json
+
+**/.claude/.cc-writes/
