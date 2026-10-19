@@ -70,7 +70,14 @@ log "dotfiles: $DOTFILES ($(uname -s))"
 link zsh/zshrc    .zshrc
 link zsh/zprofile .zprofile
 
-# git
+# git. A real ~/.gitconfig (for example from a Coder template running
+# `git config --global user.email`) becomes ~/.gitconfig.local, which
+# git/gitconfig includes, so that identity survives instead of being
+# buried in the backup dir.
+if [ -f "$HOME/.gitconfig" ] && [ ! -L "$HOME/.gitconfig" ] && [ ! -e "$HOME/.gitconfig.local" ]; then
+  mv "$HOME/.gitconfig" "$HOME/.gitconfig.local"
+  log "moved     $HOME/.gitconfig -> $HOME/.gitconfig.local (kept as local override)"
+fi
 link git/gitconfig        .gitconfig
 link git/gitignore_global .gitignore
 

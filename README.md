@@ -70,7 +70,9 @@ never land in the repo:
 - `~/.zshrc.local`, sourced at the end of `zshrc`. Put API keys and
   work-only PATH entries here.
 - `~/.gitconfig.local`, included at the end of `gitconfig`. Put signing keys,
-  an email override, or a mergetool here.
+  an email override, or a mergetool here. If `install.sh` finds a real
+  `~/.gitconfig` and no `~/.gitconfig.local` yet, it moves the file there so
+  an identity set earlier (for example by a Coder template) keeps working.
 
 Avoid `git config --global ...`. Git rewrites `~/.gitconfig` by renaming a
 temp file over it, which replaces the symlink with a plain copy. Edit

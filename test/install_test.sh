@@ -25,6 +25,9 @@ check_link() {
 #   a stale ~/.vimrc and ~/.vim pointing at the old vimconfig repo (must be replaced)
 #   an unrelated script in ~/bin (must be left alone)
 printf 'echo old zshrc\n' > "$HOME/.zshrc"
+#   a real ~/.gitconfig, as a Coder template's `git config --global` would leave
+#   (must become ~/.gitconfig.local so the identity survives)
+printf '[user]\n\temail = seeded@example.com\n' > "$HOME/.gitconfig"
 mkdir -p "$HOME/old-vimconfig" "$HOME/bin"
 ln -s "$HOME/old-vimconfig" "$HOME/.vim"
 ln -s "$HOME/old-vimconfig/vimrc" "$HOME/.vimrc"
@@ -48,19 +51,32 @@ check_link bin/git-ai-commit-msg bin/git-ai-commit-msg
 if [ ! -e "$HOME/.vimrc" ] && [ ! -L "$HOME/.vimrc" ]; then ok ".vimrc stale symlink removed"; else bad ".vimrc should be gone so ~/.vim/vimrc is used"; fi
 [ -f "$HOME/bin/keep-me" ] && ok "unrelated ~/bin file kept" || bad "~/bin/keep-me was removed"
 
+if [ -f "$HOME/.gitconfig.local" ] && grep -q 'seeded@example.com' "$HOME/.gitconfig.local"; then ok "pre-existing real .gitconfig moved to .gitconfig.local"; else bad "pre-existing real .gitconfig was not moved to .gitconfig.local"; fi
+seen_email=$(cd "$T" && git config --get user.email 2>/dev/null)
+[ "$seen_email" = "seeded@example.com" ] && ok "git still sees the pre-existing identity via the include" || bad "git sees user.email='$seen_email', expected seeded@example.com"
+
 backup=$(find "$HOME/.dotfiles-backup" -name .zshrc 2>/dev/null | head -1)
 if [ -n "$backup" ] && grep -q 'old zshrc' "$backup"; then ok "real .zshrc backed up to $backup"; else bad "real .zshrc was not backed up"; fi
 [ "$(find "$HOME/.dotfiles-backup" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')" = 1 ] && ok "one backup dir" || bad "expected exactly one backup dir"
 
 echo "# second run (idempotent)"
 sh "$DOTFILES/install.sh" > "$T/run2.out" 2>&1 || bad "install.sh exited non-zero on second run"
-grep -q -E '^(linked|backed up)' "$T/run2.out" && bad "second run changed something: $(grep -E '^(linked|backed up)' "$T/run2.out" | head -3)" || ok "second run made no changes"
+grep -q -E '^(linked|backed up|moved|removed)' "$T/run2.out" && bad "second run changed something: $(grep -E '^(linked|backed up|moved|removed)' "$T/run2.out" | head -3)" || ok "second run made no changes"
 [ "$(find "$HOME/.dotfiles-backup" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')" = 1 ] && ok "no new backup dir on second run" || bad "second run created another backup dir"
 
 echo "# shell and editor load through the links"
 zsh -ic 'echo "$DOTFILES"; whence -w be' > "$T/zsh.out" 2>&1
 grep -q "^$DOTFILES\$" "$T/zsh.out" && ok "zshrc resolves DOTFILES" || bad "zshrc did not resolve DOTFILES: $(cat "$T/zsh.out")"
 grep -q 'be: alias' "$T/zsh.out" && ok "zsh aliases defined" || bad "zsh alias be missing"
+
+# If ~/.zshrc is a plain copy rather than a symlink, DOTFILES cannot be derived
+# and must be left unset rather than pointing at a wrong directory.
+H3="$T/home3"
+mkdir -p "$H3"
+cp "$DOTFILES/zsh/zshrc" "$H3/.zshrc"
+HOME="$H3" zsh -ic 'echo "[${DOTFILES-unset}]"; echo "[${DOTFILES+set}]"' > "$T/zsh3.out" 2>&1
+grep -q '^\[unset\]$' "$T/zsh3.out" && ok "DOTFILES left unset when .zshrc is a plain copy" || bad "DOTFILES wrongly set when .zshrc is a plain copy: $(head -1 "$T/zsh3.out")"
+grep -q -i 'error\|no such file' "$T/zsh3.out" && bad "zshrc errored as a plain copy: $(grep -i -m1 'error\|no such' "$T/zsh3.out")" || ok "zshrc loads cleanly as a plain copy"
 
 if command -v vim > /dev/null 2>&1; then
   vim --not-a-term -i NONE -c "call writefile([\$MYVIMRC, get(g:, 'colors_name', '')], '$T/vim.out')" -c 'qa!' < /dev/null > /dev/null 2>&1

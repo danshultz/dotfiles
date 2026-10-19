@@ -3,17 +3,26 @@
 # which is sourced at the end and never committed.
 
 # Resolve the dotfiles checkout from the real path of this file, so OS-specific
-# pieces can be found no matter where the repo was cloned.
+# pieces can be found no matter where the repo was cloned. This only works when
+# ~/.zshrc is the symlink install.sh creates; a plain copy of this file cannot
+# know where the repo is, so DOTFILES is left unset rather than pointing at a
+# wrong directory.
 DOTFILES="${${(%):-%x}:A:h:h}"
-export DOTFILES
+if [ -d "$DOTFILES/zsh" ]; then
+  export DOTFILES
+else
+  unset DOTFILES
+fi
 
 export EDITOR=vim
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # OS-specific setup (Homebrew paths on macOS, per-user nvm on Linux).
-_dotfiles_os="${$(uname -s):l}"
-[ -r "$DOTFILES/zsh/os/$_dotfiles_os.zsh" ] && source "$DOTFILES/zsh/os/$_dotfiles_os.zsh"
-unset _dotfiles_os
+if [ -n "${DOTFILES-}" ]; then
+  _dotfiles_os="${$(uname -s):l}"
+  [ -r "$DOTFILES/zsh/os/$_dotfiles_os.zsh" ] && source "$DOTFILES/zsh/os/$_dotfiles_os.zsh"
+  unset _dotfiles_os
+fi
 
 # Prompt: exit status, git branch, current dir.
 __parse_git_branch() {
