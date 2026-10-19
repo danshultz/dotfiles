@@ -1,0 +1,43 @@
+# Portable zsh config, linked to ~/.zshrc by install.sh.
+# Anything machine-specific (secrets, work-only tools) goes in ~/.zshrc.local,
+# which is sourced at the end and never committed.
+
+# Resolve the dotfiles checkout from the real path of this file, so OS-specific
+# pieces can be found no matter where the repo was cloned.
+DOTFILES="${${(%):-%x}:A:h:h}"
+export DOTFILES
+
+export EDITOR=vim
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# OS-specific setup (Homebrew paths on macOS, per-user nvm on Linux).
+_dotfiles_os="${$(uname -s):l}"
+[ -r "$DOTFILES/zsh/os/$_dotfiles_os.zsh" ] && source "$DOTFILES/zsh/os/$_dotfiles_os.zsh"
+unset _dotfiles_os
+
+# Prompt: exit status, git branch, current dir.
+__parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+setopt PROMPT_SUBST
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f %F{cyan}🌿$(__parse_git_branch)%f %B%F{250}%1~%f%b %# '
+
+# Version managers, only when installed.
+export PYENV_ROOT="$HOME/.pyenv"
+[ -d "$PYENV_ROOT/bin" ] && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv > /dev/null; then
+  eval "$(pyenv init -)"
+  if pyenv commands | grep -qx virtualenv-init; then
+    eval "$(pyenv virtualenv-init -)"
+  fi
+fi
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+export WORKON_HOME="$HOME/Envs"
+
+command -v rbenv > /dev/null && eval "$(rbenv init - zsh)"
+
+# Aliases
+alias be="bundle exec"
+alias clean_git_branches='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
+
+[ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

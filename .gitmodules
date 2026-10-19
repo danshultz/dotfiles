@@ -1,0 +1,56 @@
+[submodule "vim/pack/plugins/start/ColorSamplePack"]
+	path = vim/pack/plugins/start/ColorSamplePack
+	url = https://github.com/vim-scripts/Colour-Sampler-Pack.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/FuzzyFinder"]
+	path = vim/pack/plugins/start/FuzzyFinder
+	url = https://github.com/vim-scripts/FuzzyFinder.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/ale"]
+	path = vim/pack/plugins/start/ale
+	url = https://github.com/dense-analysis/ale.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/ctrlp.vim"]
+	path = vim/pack/plugins/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/editorconfig"]
+	path = vim/pack/plugins/start/editorconfig
+	url = https://github.com/editorconfig/editorconfig-vim.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/emmet"]
+	path = vim/pack/plugins/start/emmet
+	url = https://github.com/mattn/emmet-vim.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/fugitive"]
+	path = vim/pack/plugins/start/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/typescript-vim"]
+	path = vim/pack/plugins/start/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-javascript"]
+	path = vim/pack/plugins/start/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-jsx"]
+	path = vim/pack/plugins/start/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-jsx-typescript"]
+	path = vim/pack/plugins/start/vim-jsx-typescript
+	url = https://github.com/peitalin/vim-jsx-typescript.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-l9"]
+	path = vim/pack/plugins/start/vim-l9
+	url = https://github.com/slack/vim-l9.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-rails"]
+	path = vim/pack/plugins/start/vim-rails
+	url = https://github.com/tpope/vim-rails.git
+	ignore = dirty
+[submodule "vim/pack/plugins/start/vim-ruby"]
+	path = vim/pack/plugins/start/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+	ignore = dirty

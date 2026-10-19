@@ -1,0 +1,16 @@
+# Vim runtime files
+.netrwhist
+*.swp
+*~
+
+# macOS
+.DS_Store
+
+# Local scratch and tooling state
+dan-todo.md
+.claude/
+.superpowers/
+
+# Never commit credentials
+.npmrc
+*.local
