@@ -29,6 +29,9 @@ printf 'echo old zshrc\n' > "$HOME/.zshrc"
 #   (must become ~/.gitconfig.local so the identity survives)
 printf '[user]\n\temail = seeded@example.com\n' > "$HOME/.gitconfig"
 mkdir -p "$HOME/old-vimconfig" "$HOME/bin"
+#   a real nested config (parent dir exists, file is real; must be backed up)
+mkdir -p "$HOME/.config/ghostty"
+printf 'font-size = 1\n' > "$HOME/.config/ghostty/config"
 ln -s "$HOME/old-vimconfig" "$HOME/.vim"
 ln -s "$HOME/old-vimconfig/vimrc" "$HOME/.vimrc"
 printf '#!/bin/sh\n' > "$HOME/bin/keep-me"
@@ -47,6 +50,14 @@ check_link .irbrc            ruby/irbrc
 check_link .ackrc            ack/ackrc
 check_link bin/git-ai-commit     bin/git-ai-commit
 check_link bin/git-ai-commit-msg bin/git-ai-commit-msg
+check_link .config/ghostty/config ghostty/config
+if [ "$(uname -s)" = Darwin ]; then
+  check_link .config/cmux/cmux.json cmux/cmux.json
+else
+  if [ -e "$HOME/.config/cmux/cmux.json" ] || [ -L "$HOME/.config/cmux/cmux.json" ]; then bad "cmux config linked on non-macOS"; else ok "cmux config skipped on $(uname -s)"; fi
+fi
+nested_backup=$(find "$HOME/.dotfiles-backup" -path '*/.config/ghostty/config' 2>/dev/null | head -1)
+if [ -n "$nested_backup" ] && grep -q 'font-size = 1' "$nested_backup"; then ok "real nested ghostty config backed up"; else bad "real ~/.config/ghostty/config was not backed up"; fi
 
 if [ ! -e "$HOME/.vimrc" ] && [ ! -L "$HOME/.vimrc" ]; then ok ".vimrc stale symlink removed"; else bad ".vimrc should be gone so ~/.vim/vimrc is used"; fi
 [ -f "$HOME/bin/keep-me" ] && ok "unrelated ~/bin file kept" || bad "~/bin/keep-me was removed"
@@ -93,7 +104,7 @@ echo "# ~/bin that is itself a symlink into the repo must leave repo files alone
 SCRATCH="$T/scratch-repo"
 mkdir -p "$SCRATCH/vim"
 cp "$DOTFILES/install.sh" "$SCRATCH/"
-for d in zsh git ruby ack bin; do cp -R "$DOTFILES/$d" "$SCRATCH/"; done
+for d in zsh git ruby ack ghostty cmux bin; do cp -R "$DOTFILES/$d" "$SCRATCH/"; done
 cp -R "$DOTFILES/vim/colors" "$SCRATCH/vim/"
 cp "$DOTFILES/vim/vimrc" "$SCRATCH/vim/"
 H2="$T/home2"

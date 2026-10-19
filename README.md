@@ -13,13 +13,17 @@ beyond `sh`, `git`, `zsh` and `vim`, and installs nothing itself.
 | `vim/` | `vimrc`, `colors/`, and plugins as submodules in `pack/plugins/start/` | `~/.vim` |
 | `ruby/` | `gemrc`, `irbrc` | `~/.gemrc`, `~/.irbrc` |
 | `ack/` | `ackrc` | `~/.ackrc` |
+| `ghostty/` | Ghostty terminal `config` | `~/.config/ghostty/config` |
+| `cmux/` | cmux terminal `cmux.json` | `~/.config/cmux/cmux.json`, macOS only |
 | `bin/` | scripts, linked one file at a time | `~/bin/<name>` |
 | `macos/iterm2/` | iTerm2 profile and preferences exports | imported by hand, see below |
 | `install.sh` | the linker | |
 | `test/install_test.sh` | end-to-end test against a throwaway `$HOME` | |
 
 Files drop their leading dot inside the repo so they are easy to see and edit.
-`install.sh` holds the explicit list of what links where.
+`install.sh` holds the explicit list of what links where. Terminal app configs
+are linked as single files, not whole directories, so anything the app writes
+next to them stays out of the repo.
 
 Vim reads `~/.vim/vimrc` on its own, so there is no `~/.vimrc` link. Don't
 create one; it would shadow the real config.

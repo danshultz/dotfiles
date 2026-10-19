@@ -10,6 +10,7 @@
 set -eu
 
 DOTFILES=$(cd "$(dirname "$0")" && pwd -P)
+OS=$(uname -s)
 BACKUP_ROOT="$HOME/.dotfiles-backup"
 BACKUP_DIR=""
 
@@ -64,7 +65,7 @@ retire() {
   fi
 }
 
-log "dotfiles: $DOTFILES ($(uname -s))"
+log "dotfiles: $DOTFILES ($OS)"
 
 # shell
 link zsh/zshrc    .zshrc
@@ -90,6 +91,13 @@ link vim .vim
 link ruby/gemrc .gemrc
 link ruby/irbrc .irbrc
 link ack/ackrc  .ackrc
+
+# terminal apps: these configure the machine you type on. Ghostty runs on
+# macOS and Linux; cmux is macOS-only.
+link ghostty/config .config/ghostty/config
+if [ "$OS" = Darwin ]; then
+  link cmux/cmux.json .config/cmux/cmux.json
+fi
 
 # scripts, linked one by one so unrelated files in ~/bin are untouched
 for f in "$DOTFILES"/bin/*; do
