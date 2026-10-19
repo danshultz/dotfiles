@@ -40,6 +40,11 @@ link() {
       return
     fi
     rm "$link_dest"   # stale or foreign symlink; its target still exists elsewhere
+  elif [ "$link_dest" -ef "$link_src" ]; then
+    # Already the same file, reached through a symlinked parent (e.g. ~/bin -> repo/bin).
+    # Backing it up would move the repo's own file.
+    log "ok        $link_dest (same file)"
+    return
   elif [ -e "$link_dest" ]; then
     backup "$link_dest"
   fi

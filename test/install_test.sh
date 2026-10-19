@@ -71,6 +71,23 @@ if command -v vim > /dev/null 2>&1; then
   [ "$tags" -gt 0 ] && ok "helptags generated ($tags files)" || bad "no doc/tags generated"
 fi
 
+echo "# ~/bin that is itself a symlink into the repo must leave repo files alone"
+# Uses a scratch copy of the repo (no .git, no plugins) so a bug here cannot
+# move tracked files out of the real checkout.
+SCRATCH="$T/scratch-repo"
+mkdir -p "$SCRATCH/vim"
+cp "$DOTFILES/install.sh" "$SCRATCH/"
+for d in zsh git ruby ack bin; do cp -R "$DOTFILES/$d" "$SCRATCH/"; done
+cp -R "$DOTFILES/vim/colors" "$SCRATCH/vim/"
+cp "$DOTFILES/vim/vimrc" "$SCRATCH/vim/"
+H2="$T/home2"
+mkdir -p "$H2"
+ln -s "$SCRATCH/bin" "$H2/bin"
+HOME="$H2" sh "$SCRATCH/install.sh" > "$T/run3.out" 2>&1 || bad "install.sh failed when ~/bin is a symlink into the repo: $(tail -2 "$T/run3.out")"
+if [ -f "$SCRATCH/bin/git-ai-commit" ] && [ ! -L "$SCRATCH/bin/git-ai-commit" ]; then ok "repo bin/git-ai-commit left in place"; else bad "repo bin/git-ai-commit was moved or replaced by a symlink"; fi
+[ -L "$H2/bin" ] && [ "$(readlink "$H2/bin")" = "$SCRATCH/bin" ] && ok "~/bin symlink kept" || bad "~/bin symlink was replaced"
+[ -e "$H2/.dotfiles-backup" ] && bad "a backup was taken when nothing needed replacing" || ok "no spurious backup"
+
 echo
 if [ "$fail" = 0 ]; then echo "PASS (home was $T)"; else echo "FAIL (home was $T)"; fi
 exit "$fail"

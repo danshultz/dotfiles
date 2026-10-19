@@ -53,9 +53,11 @@ dotfiles URL at creation time and do this for you. The HTTPS URL avoids
 needing a GitHub SSH key in the workspace; the Vim plugin submodules are all
 HTTPS as well.
 
-Two things the workspace image must provide:
+Three things the workspace image must provide:
 
 - zsh as the login shell, or neither `.zshrc` nor `.zprofile` is read.
+- Vim 8.0 or newer with `+eval`, which is the full `vim` package on Debian
+  and Ubuntu. `vim-tiny` cannot run the vimrc or load packages.
 - `git-lfs`, if you work in repos that use LFS. `gitconfig` sets
   `filter.lfs.required = true`, so git refuses to check out LFS content
   without it. Override in `~/.gitconfig.local` if you need pointer files instead.
@@ -92,8 +94,9 @@ Plugins are native Vim 8 packages: each is a git submodule in
 git submodule add https://github.com/<owner>/<repo>.git vim/pack/plugins/start/<name>
 git config -f .gitmodules submodule.vim/pack/plugins/start/<name>.ignore dirty
 
-# update one plugin to its latest commit, then commit the new pin
+# update one plugin to its latest commit, regenerate help tags, commit the new pin
 git submodule update --remote vim/pack/plugins/start/<name>
+./install.sh
 
 # remove
 git submodule deinit -f vim/pack/plugins/start/<name>
