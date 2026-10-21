@@ -8,7 +8,7 @@ beyond `sh`, `git`, `zsh` and `vim`, and installs nothing itself.
 
 | Directory | Contents | Linked to |
 |---|---|---|
-| `zsh/` | `zshrc`, `zprofile`, and `os/{darwin,linux}.zsh` sourced by OS | `~/.zshrc`, `~/.zprofile` |
+| `zsh/` | `zshrc`, `zprofile`, `functions.zsh`, and `os/{darwin,linux}.zsh` sourced by OS | `~/.zshrc`, `~/.zprofile` |
 | `git/` | `gitconfig` and the global `gitignore_global` | `~/.gitconfig`, `~/.gitignore` |
 | `vim/` | `vimrc`, `colors/`, and plugins as submodules in `pack/plugins/start/` | `~/.vim` |
 | `ruby/` | `gemrc`, `irbrc` | `~/.gemrc`, `~/.irbrc` |
@@ -89,6 +89,9 @@ behind your back include `git lfs install` and `gh auth setup-git`.
 1. Put the file in the directory for its tool (or make a new one).
 2. Add a `link <repo path> <home path>` line to `install.sh`.
 3. Run `./install.sh`, then `sh test/install_test.sh` if you changed the script.
+
+Shell functions are the exception: add them to `zsh/functions.zsh`, which
+`zshrc` sources directly from the repo. No `install.sh` change is needed.
 
 ## Vim plugins
 

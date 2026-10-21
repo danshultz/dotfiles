@@ -76,9 +76,10 @@ grep -q -E '^(linked|backed up|moved|removed)' "$T/run2.out" && bad "second run 
 [ "$(find "$HOME/.dotfiles-backup" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')" = 1 ] && ok "no new backup dir on second run" || bad "second run created another backup dir"
 
 echo "# shell and editor load through the links"
-zsh -ic 'echo "$DOTFILES"; whence -w be' > "$T/zsh.out" 2>&1
+zsh -ic 'echo "$DOTFILES"; whence -w be; whence -w tmux_session' > "$T/zsh.out" 2>&1
 grep -q "^$DOTFILES\$" "$T/zsh.out" && ok "zshrc resolves DOTFILES" || bad "zshrc did not resolve DOTFILES: $(cat "$T/zsh.out")"
 grep -q 'be: alias' "$T/zsh.out" && ok "zsh aliases defined" || bad "zsh alias be missing"
+grep -q 'tmux_session: function' "$T/zsh.out" && ok "zsh functions.zsh sourced" || bad "tmux_session function missing (functions.zsh not sourced)"
 
 # If ~/.zshrc is a plain copy rather than a symlink, DOTFILES cannot be derived
 # and must be left unset rather than pointing at a wrong directory.

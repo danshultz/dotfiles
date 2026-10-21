@@ -45,6 +45,9 @@ export WORKON_HOME="$HOME/Envs"
 
 command -v rbenv > /dev/null && eval "$(rbenv init - zsh)"
 
+# Shared shell functions.
+[ -n "${DOTFILES-}" ] && [ -r "$DOTFILES/zsh/functions.zsh" ] && source "$DOTFILES/zsh/functions.zsh"
+
 # Aliases
 alias be="bundle exec"
 alias clean_git_branches='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
