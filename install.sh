@@ -70,6 +70,10 @@ log "dotfiles: $DOTFILES ($OS)"
 # shell
 link zsh/zshrc    .zshrc
 link zsh/zprofile .zprofile
+# Coder keeps bash as the login shell; bashrc hands interactive sessions to zsh.
+if [ "$OS" = Linux ]; then
+  link bash/bashrc .bashrc
+fi
 
 # git. A real ~/.gitconfig (for example from a Coder template running
 # `git config --global user.email`) becomes ~/.gitconfig.local, which

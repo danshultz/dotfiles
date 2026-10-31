@@ -1,0 +1,16 @@
+# Linked to ~/.bashrc on Linux (Coder workspaces) by install.sh.
+# bash stays the login shell because Coder tooling runs through it; interactive
+# sessions are handed to zsh. Keep this at the end of the file.
+#
+# Escape hatches:
+#   NO_SHELL_HANDOFF=1 bash                    real bash prompt from inside zsh
+#   coder ssh -t <workspace> -- bash --norc -i   recover if zsh config breaks
+
+# Hand interactive sessions to my preferred shell; anything running a command stays on bash.
+# VS Code terminals are exempt so they keep their shell integration.
+PREFERRED_SHELL=zsh
+if [[ $- == *i* ]] && [ -z "${BASH_EXECUTION_STRING:-}" ] && [ -z "${NO_SHELL_HANDOFF:-}" ] \
+   && [ "${TERM_PROGRAM:-}" != vscode ] \
+   && command -v "$PREFERRED_SHELL" >/dev/null 2>&1; then
+  exec "$PREFERRED_SHELL"
+fi

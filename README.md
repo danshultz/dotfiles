@@ -9,6 +9,7 @@ beyond `sh`, `git`, `zsh` and `vim`, and installs nothing itself.
 | Directory | Contents | Linked to |
 |---|---|---|
 | `zsh/` | `zshrc`, `zprofile`, `functions.zsh`, and `os/{darwin,linux}.zsh` sourced by OS | `~/.zshrc`, `~/.zprofile` |
+| `bash/` | `bashrc`: hands interactive sessions to zsh | `~/.bashrc`, Linux only |
 | `git/` | `gitconfig` and the global `gitignore_global` | `~/.gitconfig`, `~/.gitignore` |
 | `vim/` | `vimrc`, `colors/`, and plugins as submodules in `pack/plugins/start/` | `~/.vim` |
 | `ruby/` | `gemrc`, `irbrc` | `~/.gemrc`, `~/.irbrc` |
@@ -59,7 +60,10 @@ HTTPS as well.
 
 Three things the workspace image must provide:
 
-- zsh as the login shell, or neither `.zshrc` nor `.zprofile` is read.
+- zsh installed. bash stays the login shell (Coder tooling depends on it);
+  `bash/bashrc` hands interactive sessions to zsh. Use `NO_SHELL_HANDOFF=1 bash`
+  for a real bash prompt, or `coder ssh -t <workspace> -- bash --norc -i` if
+  your zsh config breaks. zsh only reads `~/.zshrc` this way, never `.zprofile`.
 - Vim 8.0 or newer with `+eval`, which is the full `vim` package on Debian
   and Ubuntu. `vim-tiny` cannot run the vimrc or load packages.
 - `git-lfs`, if you work in repos that use LFS. `gitconfig` sets

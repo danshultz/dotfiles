@@ -42,6 +42,11 @@ sed 's/^/  | /' "$T/run1.out"
 
 check_link .zshrc            zsh/zshrc
 check_link .zprofile         zsh/zprofile
+if [ "$(uname -s)" = Linux ]; then
+  check_link .bashrc bash/bashrc
+else
+  if [ -e "$HOME/.bashrc" ] || [ -L "$HOME/.bashrc" ]; then bad "bashrc linked on non-Linux"; else ok "bashrc skipped on $(uname -s)"; fi
+fi
 check_link .gitconfig        git/gitconfig
 check_link .gitignore        git/gitignore_global
 check_link .vim              vim
