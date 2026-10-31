@@ -14,6 +14,17 @@ else
   unset DOTFILES
 fi
 
+# --- PERSISTENT HISTORY SETTINGS ---
+# Define where to save history on this server
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=5000
+SAVEHIST=5000
+
+# Enable the advanced history options
+setopt extended_history       # Save timestamps and run times
+setopt inc_append_history     # Save commands immediately
+setopt share_history          # Share history across concurrent SSH sessions
+
 export EDITOR=vim
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
