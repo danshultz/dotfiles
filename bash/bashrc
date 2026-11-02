@@ -14,3 +14,6 @@ if [[ $- == *i* ]] && [ -z "${BASH_EXECUTION_STRING:-}" ] && [ -z "${NO_SHELL_HA
    && command -v "$PREFERRED_SHELL" >/dev/null 2>&1; then
   exec "$PREFERRED_SHELL"
 fi
+
+# Prefer Coder's forwarded ssh-agent over gpg-agent's (empty) ssh emulation
+[ -S "$HOME/.ssh/agent.sock" ] && export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
